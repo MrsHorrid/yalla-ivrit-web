@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ClientLogos from '@/components/ClientLogos';
+import BentoGallery from '@/components/BentoGallery';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 
@@ -18,6 +19,7 @@ const Index = () => {
       <main className="flex-grow">
         <HeroSection />
         <ClientLogos />
+        <BentoGallery />
       </main>
       <Footer />
     </motion.div>
