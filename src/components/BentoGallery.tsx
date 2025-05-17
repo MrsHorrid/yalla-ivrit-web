@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Card, CardContent } from '@/components/ui/card';
-import { Grid4X4 } from 'lucide-react';
+import { Grid3X3 } from 'lucide-react';
 
 interface GalleryItem {
   id: string;
@@ -61,7 +61,7 @@ const BentoGallery: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <Grid4X4 className="w-5 h-5 sm:w-6 sm:h-6 text-aidea-green" />
+          <Grid3X3 className="w-5 h-5 sm:w-6 sm:h-6 text-aidea-green" />
           <span className="text-aidea-green text-xs sm:text-sm font-semibold tracking-wider uppercase">פרויקטים נבחרים</span>
         </motion.div>
         
