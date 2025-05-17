@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Card, CardContent } from '@/components/ui/card';
-import { GalleryVertical } from 'lucide-react';
+import { Grid4X4 } from 'lucide-react';
 
 interface GalleryItem {
   id: string;
@@ -52,8 +52,8 @@ const galleryItems: GalleryItem[] = [
 
 const BentoGallery: React.FC = () => {
   return (
-    <section className="w-full py-16 sm:py-20 md:py-24 bg-gradient-to-b from-transparent to-black/20">
-      <div className="container mx-auto px-4 mb-10 sm:mb-14">
+    <section className="w-full py-12 sm:py-16 md:py-20 bg-gradient-to-b from-transparent to-black/20">
+      <div className="container mx-auto px-4 mb-8 sm:mb-10">
         <motion.div
           className="flex items-center justify-center gap-3 mb-3"
           initial={{ opacity: 0, y: -20 }}
@@ -61,7 +61,7 @@ const BentoGallery: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <GalleryVertical className="w-5 h-5 sm:w-6 sm:h-6 text-aidea-green" />
+          <Grid4X4 className="w-5 h-5 sm:w-6 sm:h-6 text-aidea-green" />
           <span className="text-aidea-green text-xs sm:text-sm font-semibold tracking-wider uppercase">פרויקטים נבחרים</span>
         </motion.div>
         
@@ -76,7 +76,7 @@ const BentoGallery: React.FC = () => {
         </motion.h2>
         
         <motion.p
-          className="text-center text-sm sm:text-base text-gray-400 max-w-lg mx-auto mb-12 sm:mb-16 px-4"
+          className="text-center text-sm sm:text-base text-gray-400 max-w-lg mx-auto mb-10 sm:mb-12 px-4"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -86,67 +86,78 @@ const BentoGallery: React.FC = () => {
         </motion.p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 lg:gap-8">
-          {galleryItems.map((item) => {
-            // Refined size classes with better proportions
-            const sizeClasses = {
-              'small': 'md:col-span-4 lg:col-span-3',
-              'medium': 'md:col-span-4 lg:col-span-4', 
-              'large': 'md:col-span-8 lg:col-span-8'
-            }[item.size];
-            
-            // Different aspect ratios based on size for better visual flow
-            const aspectRatio = item.size === 'large' ? 16/8 : item.size === 'medium' ? 16/9 : 3/4;
-            
-            return (
-              <motion.div 
-                key={item.id}
-                className={`${sizeClasses} group`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: Number(item.id) * 0.1 }}
-              >
-                <Link to={item.route} className="block h-full">
-                  <Card className="overflow-hidden h-full bg-black/50 backdrop-blur-sm border-aidea-blue/10 hover:border-aidea-blue/40 transition-all duration-500 shadow-lg hover:shadow-aidea-blue/20">
-                    <motion.div 
-                      className="h-full"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <div className="relative h-full">
-                        <AspectRatio ratio={aspectRatio} className="h-full bg-black/70">
-                          <img 
-                            src={item.image} 
-                            alt={item.title} 
-                            className="object-cover w-full h-full opacity-70 group-hover:opacity-85 transition-all duration-700 scale-105 group-hover:scale-110"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-500" />
-                        </AspectRatio>
-                        <CardContent className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 lg:p-7">
-                          <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: Number(item.id) * 0.15 + 0.3 }}
-                          >
-                            <div className="h-1 w-10 sm:w-12 mb-3 sm:mb-4 bg-aidea-green rounded-full transform origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 text-white line-clamp-2">{item.title}</h3>
-                            <p className="text-xs sm:text-sm text-gray-300 max-w-md line-clamp-2 sm:line-clamp-3">{item.description}</p>
-                          </motion.div>
-                        </CardContent>
-                      </div>
-                    </motion.div>
-                  </Card>
-                </Link>
-              </motion.div>
-            );
-          })}
+      <div className="max-w-7xl mx-auto px-0 sm:px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-0 sm:gap-3 md:gap-4">
+          {/* First row - takes up full width on mobile, splits into two cards on desktop */}
+          <div className="lg:col-span-6">
+            <BentoCard item={galleryItems[0]} />
+          </div>
+          <div className="lg:col-span-6">
+            <BentoCard item={galleryItems[1]} />
+          </div>
+          
+          {/* Second row - takes up full width on mobile, splits into two cards on desktop */}
+          <div className="lg:col-span-6">
+            <BentoCard item={galleryItems[2]} />
+          </div>
+          <div className="lg:col-span-6">
+            <BentoCard item={galleryItems[3]} />
+          </div>
         </div>
       </div>
     </section>
+  );
+};
+
+// Extracted BentoCard component for cleaner code
+const BentoCard: React.FC<{ item: GalleryItem }> = ({ item }) => {
+  // Each image will have a consistent aspect ratio
+  const aspectRatio = 16/9;
+  
+  return (
+    <motion.div 
+      key={item.id}
+      className="h-full w-full"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: Number(item.id) * 0.1 }}
+    >
+      <Link to={item.route} className="block h-full">
+        <Card className="overflow-hidden h-full bg-black/50 backdrop-blur-sm border-0 hover:border-aidea-blue/40 transition-all duration-500 shadow-lg hover:shadow-aidea-blue/20 rounded-none sm:rounded-lg">
+          <motion.div 
+            className="h-full"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="relative h-full">
+              <AspectRatio ratio={aspectRatio} className="h-full bg-black/70">
+                <img 
+                  src={item.image} 
+                  alt={item.title} 
+                  className="object-cover w-full h-full opacity-75 group-hover:opacity-90 transition-all duration-700"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-500" />
+              </AspectRatio>
+              <CardContent className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: Number(item.id) * 0.15 + 0.3 }}
+                  className="group"
+                >
+                  <div className="h-1 w-10 sm:w-12 mb-3 sm:mb-4 bg-aidea-green rounded-full transform origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 text-white">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-300 line-clamp-2 sm:line-clamp-3">{item.description}</p>
+                </motion.div>
+              </CardContent>
+            </div>
+          </motion.div>
+        </Card>
+      </Link>
+    </motion.div>
   );
 };
 
