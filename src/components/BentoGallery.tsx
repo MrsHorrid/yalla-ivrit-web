@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Card, CardContent } from '@/components/ui/card';
-import { Gallery, GalleryVertical } from 'lucide-react';
+import { GalleryVertical } from 'lucide-react';
 
 interface GalleryItem {
   id: string;
