@@ -52,8 +52,8 @@ const galleryItems: GalleryItem[] = [
 
 const BentoGallery: React.FC = () => {
   return (
-    <section className="w-full py-20 bg-gradient-to-b from-transparent to-black/20">
-      <div className="container mx-auto px-4 mb-10">
+    <section className="w-full py-12 sm:py-16 md:py-20 bg-gradient-to-b from-transparent to-black/20">
+      <div className="container mx-auto px-4 mb-6 sm:mb-10">
         <motion.div
           className="flex items-center justify-center gap-3 mb-2"
           initial={{ opacity: 0, y: -20 }}
@@ -61,12 +61,12 @@ const BentoGallery: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <GalleryVertical className="w-6 h-6 text-aidea-green" />
-          <span className="text-aidea-green text-sm font-semibold tracking-wider uppercase">פרויקטים נבחרים</span>
+          <GalleryVertical className="w-5 h-5 sm:w-6 sm:h-6 text-aidea-green" />
+          <span className="text-aidea-green text-xs sm:text-sm font-semibold tracking-wider uppercase">פרויקטים נבחרים</span>
         </motion.div>
         
         <motion.h2 
-          className="text-center text-4xl font-bold mb-3"
+          className="text-center text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -76,7 +76,7 @@ const BentoGallery: React.FC = () => {
         </motion.h2>
         
         <motion.p
-          className="text-center text-gray-400 max-w-lg mx-auto mb-16"
+          className="text-center text-sm sm:text-base text-gray-400 max-w-lg mx-auto mb-8 sm:mb-12 md:mb-16 px-4"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -87,13 +87,13 @@ const BentoGallery: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-12 gap-4 sm:gap-6">
           {galleryItems.map((item) => {
-            // Map size to grid classes
+            // Map size to grid classes - more responsive breakpoints
             const sizeClasses = {
-              'small': 'md:col-span-4',
-              'medium': 'md:col-span-6', 
-              'large': 'md:col-span-8'
+              'small': 'sm:col-span-3 md:col-span-4 lg:col-span-3',
+              'medium': 'sm:col-span-3 md:col-span-6 lg:col-span-5', 
+              'large': 'sm:col-span-6 md:col-span-8 lg:col-span-7'
             }[item.size];
             
             return (
@@ -118,19 +118,20 @@ const BentoGallery: React.FC = () => {
                             src={item.image} 
                             alt={item.title} 
                             className="object-cover w-full h-full opacity-60 group-hover:opacity-80 transition-all duration-700 scale-105 group-hover:scale-110"
+                            loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-500" />
                         </AspectRatio>
-                        <CardContent className="absolute inset-0 flex flex-col justify-end p-8">
+                        <CardContent className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 md:p-8">
                           <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: Number(item.id) * 0.15 + 0.3 }}
                           >
-                            <div className="h-1 w-12 mb-4 bg-aidea-green rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">{item.title}</h3>
-                            <p className="text-sm md:text-base text-gray-300 max-w-md">{item.description}</p>
+                            <div className="h-1 w-8 sm:w-12 mb-3 sm:mb-4 bg-aidea-green rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-white line-clamp-2">{item.title}</h3>
+                            <p className="text-xs sm:text-sm md:text-base text-gray-300 max-w-md line-clamp-3">{item.description}</p>
                           </motion.div>
                         </CardContent>
                       </div>

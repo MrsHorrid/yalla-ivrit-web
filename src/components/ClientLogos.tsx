@@ -25,14 +25,14 @@ const ClientLogos: React.FC = () => {
 
   return (
     <motion.section 
-      className="py-16 px-6 md:px-12"
+      className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-12"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7 }}
     >
       <motion.h2 
-        className="text-center text-2xl font-bold mb-12"
+        className="text-center text-xl sm:text-2xl font-bold mb-6 sm:mb-8 md:mb-12"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -41,11 +41,11 @@ const ClientLogos: React.FC = () => {
         חברות שעבדנו איתן ובהן
       </motion.h2>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
         {companyLogos.map((logo, index) => (
           <motion.div 
             key={index} 
-            className="flex items-center justify-center p-6 border border-aidea-green/30 rounded-lg hover:border-aidea-green transition-colors"
+            className="flex items-center justify-center p-4 sm:p-6 border border-aidea-green/30 rounded-lg hover:border-aidea-green transition-colors"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -59,7 +59,8 @@ const ClientLogos: React.FC = () => {
               <img 
                 src={logo.path} 
                 alt={logo.alt}
-                className="w-auto h-14 object-contain"
+                className="w-auto h-8 sm:h-10 md:h-14 object-contain"
+                loading="lazy"
               />
             </div>
           </motion.div>
