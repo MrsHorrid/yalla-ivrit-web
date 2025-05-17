@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -95,7 +98,40 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  html {
+    direction: rtl;
+    font-family: 'Heebo', sans-serif;
   }
+
+  body {
+    @apply bg-aidea-black text-white;
+  }
+}
+
+.robot-ring {
+  position: relative;
+}
+
+.robot-ring::before,
+.robot-ring::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.robot-ring::before {
+  width: 110%;
+  height: 110%;
+  border: 2px solid #c1ff45;
+}
+
+.robot-ring::after {
+  width: 120%;
+  height: 120%;
+  border: 2px solid #3EBDDD;
+  animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
