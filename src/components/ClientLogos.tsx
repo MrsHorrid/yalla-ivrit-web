@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const ClientLogos: React.FC = () => {
   // Company logos array with paths and alt text
@@ -23,12 +24,37 @@ const ClientLogos: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 px-6 md:px-12">
-      <h2 className="text-center text-2xl font-bold mb-12">חברות שעבדנו איתן ובהן</h2>
+    <motion.section 
+      className="py-16 px-6 md:px-12"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+    >
+      <motion.h2 
+        className="text-center text-2xl font-bold mb-12"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        חברות שעבדנו איתן ובהן
+      </motion.h2>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {companyLogos.map((logo, index) => (
-          <div key={index} className="flex items-center justify-center p-6 border border-aidea-green/30 rounded-lg hover:border-aidea-green transition-colors">
+          <motion.div 
+            key={index} 
+            className="flex items-center justify-center p-6 border border-aidea-green/30 rounded-lg hover:border-aidea-green transition-colors"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 * index }}
+            whileHover={{ 
+              scale: 1.05, 
+              boxShadow: "0 0 15px rgba(193, 255, 69, 0.3)" 
+            }}
+          >
             <div className="flex items-center justify-center w-full">
               <img 
                 src={logo.path} 
@@ -36,10 +62,10 @@ const ClientLogos: React.FC = () => {
                 className="w-auto h-14 object-contain"
               />
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

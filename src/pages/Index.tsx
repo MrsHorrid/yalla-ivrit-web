@@ -4,17 +4,23 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ClientLogos from '@/components/ClientLogos';
 import Footer from '@/components/Footer';
+import { motion } from 'framer-motion';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <motion.div 
+      className="min-h-screen flex flex-col"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Navbar />
       <main className="flex-grow">
         <HeroSection />
         <ClientLogos />
       </main>
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 
