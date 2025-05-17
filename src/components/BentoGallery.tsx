@@ -18,8 +18,8 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
   {
     id: '1',
-    title: 'פרויקט תשתיות בינה מלאכותית',
-    description: 'בניית תשתית לניתוח נתונים ואוטומציה בעזרת בינה מלאכותית',
+    title: 'פרוייקט אלבום מוזיקה עם קליפ',
+    description: 'פיתוח קליפ ומערכת ניהול אלבום מוזיקה',
     image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200',
     route: '/consulting',
     size: 'large'
