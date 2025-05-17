@@ -9,7 +9,7 @@ const HeroSection: React.FC = () => {
       <div className="md:w-1/2 flex justify-center">
         <div className="robot-ring relative w-[350px] h-[350px] flex items-center justify-center">
           <img 
-            src="/lovable-uploads/4984d1b2-40f1-404c-b81a-7dd41149551b.png" 
+            src="/lovable-uploads/08572f23-3f9f-4ecc-8b6f-630c5a4dcd79.png" 
             alt="רובוט בינה מלאכותית" 
             className="w-[300px] h-[300px] object-contain z-10 rounded-full"
           />
