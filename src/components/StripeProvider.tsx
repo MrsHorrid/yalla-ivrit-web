@@ -1,9 +1,9 @@
 import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { stripePromise } from '@/api/stripe';
 
-// Replace with your actual Stripe publishable key when ready for production
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+// Using the stripePromise from our API module
 
 interface StripeProviderProps {
   children: React.ReactNode;

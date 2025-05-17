@@ -12,12 +12,34 @@ import StripeProvider from '@/components/StripeProvider';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import { he } from 'date-fns/locale';
+import { processConsultationBooking } from '@/services/stripe-service';
 
-// Define consultation types and prices
+// Define consultation types and prices with Stripe product and price IDs
 const consultationTypes = [
-  { id: 'basic', name: 'ייעוץ בסיסי', duration: '60 דקות', price: 299 },
-  { id: 'advanced', name: 'ייעוץ מתקדם', duration: '90 דקות', price: 499 },
-  { id: 'premium', name: 'ייעוץ פרימיום', duration: '120 דקות', price: 799 },
+  { 
+    id: 'basic', 
+    name: 'ייעוץ בסיסי', 
+    duration: '60 דקות', 
+    price: 299, 
+    stripeProductId: 'prod_SKS8XNcCqtWj0P',
+    stripePriceId: 'price_1RPo7gQrMR2eXPIimFp5O0lX'
+  },
+  { 
+    id: 'advanced', 
+    name: 'ייעוץ מתקדם', 
+    duration: '90 דקות', 
+    price: 499, 
+    stripeProductId: 'prod_SKS9JcZnv3reiK',
+    stripePriceId: 'price_1RPnFeQrMR2eXPIiRaAZShx1'
+  },
+  { 
+    id: 'premium', 
+    name: 'ייעוץ פרימיום', 
+    duration: '120 דקות', 
+    price: 799, 
+    stripeProductId: 'prod_SKSAzlN3ZFDT0v',
+    stripePriceId: 'price_1RPnFkQrMR2eXPIikn01epR3'
+  },
 ];
 
 type BookingStep = 'info' | 'schedule' | 'payment' | 'confirmation';
@@ -70,12 +92,48 @@ const ConsultingPage = () => {
     setCurrentStep('payment');
   };
   
-  const handlePaymentSuccess = () => {
-    setCurrentStep('confirmation');
-    toast({
-      title: "התשלום בוצע בהצלחה!",
-      description: "פרטי הפגישה נשלחו לדואר האלקטרוני שלך",
-    });
+  const handlePaymentSuccess = async () => {
+    try {
+      // Save booking information
+      if (!selectedTimeSlot) return;
+      
+      const bookingData = {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        topic: formData.topic,
+        message: formData.message,
+        consultationType: selectedConsultation.id,
+        consultationName: selectedConsultation.name,
+        consultationPrice: selectedConsultation.price,
+        appointmentDate: selectedTimeSlot.toISOString(),
+        stripeProductId: selectedConsultation.stripeProductId,
+        stripePriceId: selectedConsultation.stripePriceId,
+      };
+      
+      // Process booking with Stripe
+      const paymentResult = await processConsultationBooking(bookingData);
+      
+      // Redirect to Stripe Checkout page
+      if (paymentResult && paymentResult.url) {
+        window.location.href = paymentResult.url;
+        return;
+      }
+      
+      // If we get here, update UI
+      setCurrentStep('confirmation');
+      toast({
+        title: "התשלום בוצע בהצלחה!",
+        description: "פרטי הפגישה נשלחו לדואר האלקטרוני שלך",
+      });
+    } catch (error) {
+      console.error('Error processing payment:', error);
+      toast({
+        title: "שגיאה בעיבוד התשלום",
+        description: error instanceof Error ? error.message : "אנא נסה שוב או צור קשר עם התמיכה",
+        variant: "destructive"
+      });
+    }
   };
   
   const handlePaymentError = (message: string) => {
@@ -335,13 +393,12 @@ const ConsultingPage = () => {
               </div>
               
               <h2 className="text-2xl font-bold mb-6">תשלום</h2>
-              <StripeProvider>
-                <PaymentForm 
-                  amount={selectedConsultation.price} 
-                  onSuccess={handlePaymentSuccess}
-                  onError={handlePaymentError}
-                />
-              </StripeProvider>
+              <PaymentForm 
+                amount={selectedConsultation.price} 
+                stripePriceId={selectedConsultation.stripePriceId}
+                onSuccess={handlePaymentSuccess}
+                onError={handlePaymentError}
+              />
               
               <div className="mt-6">
                 <Button 

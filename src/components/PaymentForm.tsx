@@ -1,68 +1,29 @@
 import React, { useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 interface PaymentFormProps {
   amount: number;
   onSuccess: () => void;
   onError: (message: string) => void;
+  stripePriceId: string;
 }
 
-const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSuccess, onError }) => {
-  const stripe = useStripe();
-  const elements = useElements();
+const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSuccess, onError, stripePriceId }) => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentError, setPaymentError] = useState<string>('');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    const cardElement = elements.getElement(CardElement);
-    
-    if (!cardElement) {
-      return;
-    }
-
     setIsProcessing(true);
 
-    // In a real implementation, you would call your backend API to create a payment intent
-    // For demo purposes, we're just simulating a successful payment
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For a real implementation, you would use something like:
-      // const { error, paymentMethod } = await stripe.createPaymentMethod({
-      //   type: 'card',
-      //   card: cardElement,
-      // });
-      
-      // if (error) {
-      //   throw new Error(error.message);
-      // }
-      
-      // const response = await fetch('/api/create-payment', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     paymentMethodId: paymentMethod.id,
-      //     amount: amount,
-      //   }),
-      // });
-      
-      // const result = await response.json();
-      
-      // if (result.error) {
-      //   throw new Error(result.error);
-      // }
-
+      // In a production implementation, we don't need to do anything here
+      // The parent component (ConsultingPage) will handle the Stripe integration
+      // This is just a pass-through to trigger the payment process
       onSuccess();
     } catch (error) {
+      setPaymentError(error instanceof Error ? error.message : 'אירעה שגיאה בעיבוד התשלום');
       onError(error instanceof Error ? error.message : 'אירעה שגיאה בעיבוד התשלום');
     } finally {
       setIsProcessing(false);
@@ -71,25 +32,24 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSuccess, onError })
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {paymentError && (
+        <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-md text-white">
+          <p className="font-medium">שגיאה בתשלום:</p>
+          <p>{paymentError}</p>
+        </div>
+      )}
+      
       <div className="p-4 border border-aidea-green/30 rounded-md bg-white/5">
-        <label className="block text-lg font-medium mb-2">פרטי כרטיס אשראי</label>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: '#ffffff',
-                '::placeholder': {
-                  color: '#aab7c4',
-                },
-              },
-              invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a',
-              },
-            },
-          }}
-        />
+        <div className="text-center mb-4">
+          <h3 className="text-xl font-bold">תשלום מאובטח</h3>
+          <p className="text-gray-300">התשלום מאובטח על ידי Stripe</p>
+        </div>
+        
+        <div className="flex items-center justify-center space-x-4 mb-4">
+          <img src="https://cdn.jsdelivr.net/gh/creativetimofficial/public-assets@master/logos/visa.jpg" alt="Visa" className="h-8" />
+          <img src="https://cdn.jsdelivr.net/gh/creativetimofficial/public-assets@master/logos/mastercard.jpg" alt="Mastercard" className="h-8" />
+          <img src="https://cdn.jsdelivr.net/gh/creativetimofficial/public-assets@master/logos/amex.jpg" alt="American Express" className="h-8" />
+        </div>
       </div>
       
       <div className="text-right font-bold text-lg">
@@ -99,10 +59,17 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount, onSuccess, onError })
       
       <Button 
         type="submit" 
-        disabled={!stripe || isProcessing} 
+        disabled={isProcessing} 
         className="w-full bg-aidea-green text-black hover:bg-aidea-green/90 font-bold text-lg py-6"
       >
-        {isProcessing ? 'מעבד תשלום...' : 'אישור תשלום'}
+        {isProcessing ? (
+          <>
+            <Loader2 className="h-5 w-5 animate-spin ml-2" />
+            <span>מעבד תשלום...</span>
+          </>
+        ) : (
+          'מעבר לתשלום'
+        )}
       </Button>
     </form>
   );
