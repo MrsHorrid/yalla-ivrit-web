@@ -47,14 +47,6 @@ const galleryItems: GalleryItem[] = [
     image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200',
     route: '/consulting',
     size: 'medium'
-  },
-  {
-    id: '5',
-    title: 'מערכת חיזוי דפוסים עסקיים',
-    description: 'פיתוח מודל לחיזוי מגמות עסקיות בזמן אמת',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200',
-    route: '/consulting',
-    size: 'small'
   }
 ];
 
