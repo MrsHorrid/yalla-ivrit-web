@@ -29,11 +29,11 @@ const ClientLogos: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {companyLogos.map((logo, index) => (
           <div key={index} className="flex items-center justify-center p-6 border border-aidea-green/30 rounded-lg hover:border-aidea-green transition-colors">
-            <div className="h-20 flex items-center justify-center">
+            <div className="flex items-center justify-center w-full">
               <img 
                 src={logo.path} 
-                alt={logo.alt} 
-                className="max-h-full max-w-full object-contain"
+                alt={logo.alt}
+                className="w-auto h-14 object-contain"
               />
             </div>
           </div>
